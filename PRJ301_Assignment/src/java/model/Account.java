@@ -9,18 +9,10 @@ package model;
  * @author vinht
  */
 public class Account {
-    private int id;
+
     private String username;
-    private String pasword ;
-    private Role r;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private String pasword;
+    private int role;
 
     public String getUsername() {
         return username;
@@ -38,11 +30,12 @@ public class Account {
         this.pasword = pasword;
     }
 
-    public Role getR() {
-        return r;
+    public int getRole() {
+        return role;
     }
 
-    public void setR(Role r) {
-        this.r = r;
+    public void setRole(int role) {
+        this.role = role;
     }
+
 }

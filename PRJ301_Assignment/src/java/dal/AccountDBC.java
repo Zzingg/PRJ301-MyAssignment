@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
-import model.Role;
-
 
 /**
  *
@@ -24,22 +22,17 @@ public class AccountDBC extends DBContext<Account> {
     public ArrayList<Account> list() {
         ArrayList<Account> acts = new ArrayList<>();
         try {
-            String SQL = "SELECT [AccountID]\n"
-                    + "      ,[Username]\n"
-                    + "      ,[Password]\n"
-                    + "      ,[RoleID]\n"
+            String SQL = "SELECT [username]\n"
+                    + "      ,[password]\n"
+                    + "      ,[roleno]\n"
                     + "  FROM [Account]";
             ps = connection.prepareStatement(SQL);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Account a = new Account();
-                a.setId(rs.getInt("AccountID"));
-                a.setUsername(rs.getString("Username"));
-                a.setPasword(rs.getString("Password"));
-                Role r = new Role();
-                r.setId(rs.getInt("RoleID"));
-                r.setName(rs.getString("Name"));
-                a.setR(r);
+                a.setUsername(rs.getString("username"));
+                a.setPasword(rs.getString("password"));
+                a.setRole(rs.getInt("roleno"));
                 acts.add(a);
             }
         } catch (SQLException ex) {
@@ -47,18 +40,20 @@ public class AccountDBC extends DBContext<Account> {
         }
         return acts;
     }
-    
-    public String getDisplayName(String username, String password) {
-        String displayName;
+
+    public String getRoleNo(String username, String password) {
+        String roleno;
         try {
-            String sql = "SELECT [displayName] FROM [Account] WHERE [username]= ? AND [password] = ?";
-            ps = connection.prepareStatement(sql);
+            String sql = "SELECT roleno \n"
+                    + "FROM Account\n"
+                    + "WHERE username = ? AND password = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, username);
             ps.setString(2, password);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                displayName = rs.getString(1);
-                return displayName;
+                roleno = rs.getString(1);
+                return roleno;
             }
 
         } catch (SQLException ex) {
@@ -87,5 +82,4 @@ public class AccountDBC extends DBContext<Account> {
     public void delete(Account model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
 }

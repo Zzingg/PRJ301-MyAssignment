@@ -58,8 +58,18 @@ public class LoginController extends HttpServlet {
         String raw_user = request.getParameter("user");
         String raw_pass = request.getParameter("pass");
         AccountDBC adbc = new AccountDBC();
-        
-        
+        String roleno = adbc.getRoleNo(raw_user, raw_pass);
+        System.out.println(roleno);
+        if (roleno != null) {
+            if (roleno.equals("1")) {
+                request.getRequestDispatcher("view/login/sthome.jsp").forward(request, response);
+            } else if (roleno.equals("2")) {
+                request.getRequestDispatcher("view/login/ishome.jsp").forward(request, response);
+            }
+        }else {
+            request.setAttribute("error", "login failed");
+            request.getRequestDispatcher("view/login/login.jsp").forward(request, response);
+        }
 
     }
 

@@ -17,5 +17,8 @@
             pass <input type="password" name="pass"/><br>
             <input type="submit" value="login">
         </form>
+        <h5>
+            ${error}
+        </h5>
     </body>
 </html>

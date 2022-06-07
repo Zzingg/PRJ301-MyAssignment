@@ -46,5 +46,4 @@ public abstract class DBContext<T> {
 
     public abstract void delete(T model);
     
-    
 }
